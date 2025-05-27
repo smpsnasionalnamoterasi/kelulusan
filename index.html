@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yaspend Nasional Namoterasi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .card h1 {
+      margin-bottom: 30px;
+      font-size: 26px;
+      color: #222;
+    }
+
+    input[type="text"] {
+      padding: 14px;
+      width: 100%;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #0072ff;
+    }
+
+    button {
+      padding: 14px 25px;
+      background-color: #0072ff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #005edc;
+    }
+
+    .result {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .lulus {
+      color: #28a745;
+    }
+
+    .tidak-lulus {
+      color: #dc3545;
+    }
+
+    .not-found {
+      color: #6c757d;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🔍 Cek Kelulusan Siswa SMP</h1>
+    <input type="text" id="nisn" placeholder="Masukkan NISN Anda" />
+    <button onclick="cekKelulusan()">Cek Sekarang</button>
+    <div id="hasil" class="result"></div>
+    <div class="footer">Yaspend Nasional Namoterasi • 2025</div>
+  </div>
+
+  <script src="data-siswa.js"></script>
+  <script>
+    function cekKelulusan() {
+      const nisn = document.getElementById("nisn").value.trim();
+      const hasil = document.getElementById("hasil");
+
+      if (nisn === "") {
+        hasil.innerHTML = '<p class="not-found">Silakan masukkan NISN terlebih dahulu.</p>';
+        return;
+      }
+
+      const siswa = dataSiswa[nisn];
+
+      if (siswa) {
+        const statusClass = siswa.status === "LULUS" ? "lulus" : "tidak-lulus";
+        hasil.innerHTML = `
+          <p>Nama: <strong>${siswa.nama}</strong></p>
+          <p class="${statusClass}">Status: ${siswa.status}</p>
+        `;
+      } else {
+        hasil.innerHTML = `<p class="not-found">❌ NISN tidak ditemukan.</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
